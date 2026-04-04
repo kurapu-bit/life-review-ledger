@@ -1,0 +1,173 @@
+/* ==========================================================================
+   Life Review Ledger - Combined Stylesheet
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Global / Header (includes/header.php)
+   -------------------------------------------------------------------------- */
+body { font-family: 'Noto Sans JP', system-ui, sans-serif; }
+.nav-link { transition: all 0.15s ease; }
+.nav-link:hover { background-color: rgba(255,255,255,0.06); }
+.nav-link.active { background-color: rgba(255,255,255,0.1); border-left: 3px solid #b09474; padding-left: 13px; }
+.card { background: #fff; border-radius: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.04); }
+.card-hover { transition: all 0.15s ease; }
+.card-hover:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.07); transform: translateY(-1px); }
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(176, 148, 116, 0.15);
+    border-color: #b09474;
+}
+/* モバイル最適化 */
+@media (max-width: 640px) {
+    .card { border-radius: 12px; }
+    body { -webkit-text-size-adjust: 100%; }
+    input, textarea, select { font-size: 16px !important; } /* iOSズーム防止 */
+}
+/* タッチターゲット最小サイズ */
+button, a, [onclick] { min-height: 36px; }
+
+/* --------------------------------------------------------------------------
+   Home Page (pages/home.php)
+   -------------------------------------------------------------------------- */
+.hero {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #334155 100%);
+    border-radius: 18px; position: relative; overflow: hidden;
+}
+.hero::before {
+    content: ''; position: absolute; top: -50%; right: -20%; width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(176,148,116,0.08) 0%, transparent 70%); pointer-events: none;
+}
+.hero-stat {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px; padding: 14px 16px;
+}
+.priority-item {
+    border-left: 3px solid transparent; transition: all 0.2s ease; border-radius: 10px;
+}
+.priority-item:hover {
+    background: linear-gradient(90deg, #faf8f5, #ffffff);
+    border-left-color: #b09474; box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+.action-chip {
+    display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px;
+    border-radius: 10px; font-size: 13px; font-weight: 500; transition: all 0.2s ease;
+    cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.action-chip:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+.memo-item {
+    padding: 10px 12px; border-radius: 10px; background: #fafaf9; border: 1px solid rgba(0,0,0,0.03);
+}
+.section-label { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #94a3b8; }
+
+/* --------------------------------------------------------------------------
+   Issues Page (pages/issues.php)
+   -------------------------------------------------------------------------- */
+.issue-card {
+    background: #fff; border-radius: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.03);
+    border: 1px solid rgba(0,0,0,0.04); transition: all 0.2s ease; cursor: pointer;
+}
+.issue-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); transform: translateY(-1px); }
+.status-btn {
+    padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 600;
+    cursor: pointer; transition: all 0.15s ease; border: 1.5px solid transparent;
+}
+.status-btn:hover { transform: scale(1.05); }
+.status-btn.selected { border-color: currentColor; box-shadow: 0 0 0 3px rgba(0,0,0,0.04); }
+.bar-seg { width: 6px; height: 3px; border-radius: 2px; }
+
+/* --------------------------------------------------------------------------
+   Daily Input Page (pages/daily-input.php)
+   -------------------------------------------------------------------------- */
+.step { display: none; }
+.step.active { display: block; }
+.mood-opt {
+    width: 56px; height: 56px; border-radius: 14px; border: 2px solid #e5e7eb;
+    display: flex; align-items: center; justify-content: center; font-size: 24px;
+    cursor: pointer; transition: all 0.2s ease;
+}
+.mood-opt:hover { border-color: #b09474; background: #faf8f5; }
+.mood-opt.selected { border-color: #b09474; background: #f8f6f3; transform: scale(1.1); box-shadow: 0 2px 8px rgba(176,148,116,0.2); }
+.signal-btn {
+    padding: 10px 16px; border-radius: 10px; border: 1.5px solid #e5e7eb; font-size: 13px;
+    cursor: pointer; transition: all 0.15s ease; display: flex; align-items: center; gap: 8px;
+}
+.signal-btn:hover { background: #f9fafb; }
+.signal-btn.on-conflict { border-color: #fca5a5; background: #fef2f2; color: #dc2626; }
+.signal-btn.on-avoidance { border-color: #fcd34d; background: #fffbeb; color: #d97706; }
+.signal-btn.on-good { border-color: #6ee7b7; background: #ecfdf5; color: #059669; }
+.issue-check {
+    padding: 10px 14px; border-radius: 10px; border: 1.5px solid #f1f5f9;
+    transition: all 0.15s ease; cursor: pointer;
+}
+.issue-check:hover { background: #f8fafc; }
+.issue-check.checked { border-color: #fcd34d; background: #fffbeb; }
+.step-indicator { width: 8px; height: 8px; border-radius: 50%; background: #e2e8f0; transition: all 0.2s ease; }
+.step-indicator.active { background: #b09474; width: 20px; border-radius: 4px; }
+.step-indicator.done { background: #b09474; }
+.saved-banner { background: linear-gradient(135deg, #059669, #10b981); color: white; border-radius: 14px; padding: 24px; text-align: center; }
+
+/* --------------------------------------------------------------------------
+   Conversation Prep Page (pages/conversation.php)
+   -------------------------------------------------------------------------- */
+.prep-card {
+    background: #fff; border-radius: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.03);
+    border: 1px solid rgba(0,0,0,0.04); overflow: hidden;
+}
+.prep-header { padding: 16px 20px; cursor: pointer; transition: background 0.15s ease; }
+.prep-header:hover { background: #fafaf9; }
+.prep-body { display: none; border-top: 1px solid #f1f5f9; }
+.prep-body.open { display: block; }
+.prep-section { padding: 14px 16px; border-radius: 10px; }
+.chevron { transition: transform 0.2s ease; }
+.chevron.open { transform: rotate(90deg); }
+.result-btn {
+    padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: 500;
+    border: 1.5px solid #e5e7eb; cursor: pointer; transition: all 0.15s ease;
+}
+.result-btn:hover { transform: scale(1.02); }
+.result-btn.selected { border-width: 2px; box-shadow: 0 0 0 3px rgba(0,0,0,0.04); }
+.result-agreed.selected { border-color: #6ee7b7; background: #ecfdf5; color: #065f46; }
+.result-partial.selected { border-color: #fbbf24; background: #fffbeb; color: #92400e; }
+.result-continued.selected { border-color: #93c5fd; background: #eff6ff; color: #1e40af; }
+
+/* --------------------------------------------------------------------------
+   Patterns Page (pages/patterns.php)
+   -------------------------------------------------------------------------- */
+.rank-item {
+    display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px;
+    border-radius: 10px; transition: background 0.15s ease; cursor: default;
+}
+.rank-item:hover { background: #f8fafc; }
+.rank-num {
+    width: 22px; height: 22px; border-radius: 6px; display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+}
+.confidence-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.evidence-text { font-size: 11px; color: #94a3b8; font-style: italic; line-height: 1.4; margin-top: 4px; }
+.auto-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 9px; font-weight: 600; padding: 1px 6px; border-radius: 3px; background: linear-gradient(135deg, #e0e7ff, #dbeafe); color: #3b82f6; }
+.manual-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 9px; font-weight: 600; padding: 1px 6px; border-radius: 3px; background: #f1f5f9; color: #64748b; }
+.expand-btn { font-size: 12px; color: #94a3b8; cursor: pointer; padding: 8px 0; transition: color 0.15s; }
+.expand-btn:hover { color: #64748b; }
+
+/* --------------------------------------------------------------------------
+   Shared Form Styles (used across multiple pages)
+   --------------------------------------------------------------------------
+   NOTE: .field-label and .field-input appear in issues.php, daily-input.php,
+   conversation.php, patterns.php, and login.php with slight variations.
+   The definitions below are the consolidated versions. */
+.field-label { display: block; font-size: 12px; font-weight: 600; color: #64748b; margin-bottom: 6px; }
+.field-input {
+    width: 100%; border: 1.5px solid #e5e7eb; border-radius: 10px; padding: 10px 14px; font-size: 13px; transition: all 0.15s ease;
+}
+.field-input:focus { outline: none; border-color: #b09474; box-shadow: 0 0 0 3px rgba(176,148,116,0.12); }
+
+/* --------------------------------------------------------------------------
+   Login Page (pages/login.php)
+   -------------------------------------------------------------------------- */
+.login-card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);
+}
