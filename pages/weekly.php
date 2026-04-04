@@ -260,7 +260,10 @@ function fmtDate(dateStr) {
     var d = new Date(dateStr);
     return (d.getMonth()+1) + '月' + d.getDate() + '日';
 }
-// esc() はstore.jsでグローバル定義済み
+function esc(str) {
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
 }
 
 renderWeekly();
