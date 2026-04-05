@@ -13,10 +13,10 @@ if ($is_sakura) {
     define('DB_PASS', 'XXXX');
 } else {
     // === ローカル（XAMPP）用 ===
-    define('DB_HOST', 'localhost');
-    define('DB_NAME', 'life_review_ledger');
-    define('DB_USER', 'root');
-    define('DB_PASS', '');
+    define('DB_HOST', 'XXXX');
+    define('DB_NAME', 'XXXX');
+    define('DB_USER', 'XXXX');
+    define('DB_PASS', 'XXXX');
 }
 
 define('DB_CHARSET', 'utf8mb4');
