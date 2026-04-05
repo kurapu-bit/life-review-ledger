@@ -26,9 +26,13 @@ if ($page === 'logout') {
     exit;
 }
 
-// ログイン画面はそのまま表示
+// ログイン・登録画面はそのまま表示（認証不要）
 if ($page === 'login') {
     require __DIR__ . '/pages/login.php';
+    exit;
+}
+if ($page === 'register') {
+    require __DIR__ . '/pages/register.php';
     exit;
 }
 

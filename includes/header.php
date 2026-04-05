@@ -33,6 +33,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/life-review-ledger/assets/css/style.css">
+    <script>var LRL_USER_ID = <?= currentUserId() ?>;</script>
     <script src="/life-review-ledger/assets/js/store.js"></script>
 </head>
 <body class="bg-gray-50 text-slate-800 min-h-screen">

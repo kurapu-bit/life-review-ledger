@@ -74,7 +74,8 @@ var statusColors = <?= json_encode(array_combine(
 function getPreps() { try { return JSON.parse(localStorage.getItem(PREP_KEY)) || []; } catch(e) { return []; } }
 function savePreps(preps) { localStorage.setItem(PREP_KEY, JSON.stringify(preps)); }
 
-if (!localStorage.getItem(LRL.getPrefix() + 'preps_initialized')) {
+// デモデータはtest1（ID:1）のみ
+if (LRL_USER_ID === 1 && !localStorage.getItem(LRL.getPrefix() + 'preps_initialized')) {
     var demoPreps = <?= json_encode(getDemoConversationPreps(), JSON_UNESCAPED_UNICODE) ?>;
     savePreps(demoPreps);
     localStorage.setItem(LRL.getPrefix() + 'preps_initialized', '1');

@@ -3,10 +3,11 @@
  * 全画面共通のデータ保存/読み込み基盤
  */
 var LRL = (function() {
-    // URLパスからプレフィックスを生成（/life-review-ledger/ → "lrl_life-review-ledger_"）
+    // URLパス + ユーザーIDからプレフィックスを生成（ユーザーごとにデータ分離）
     var pathPrefix = (function() {
         var path = window.location.pathname.split('/').filter(function(s){ return s; })[0] || 'default';
-        return 'lrl_' + path + '_';
+        var userId = (typeof LRL_USER_ID !== 'undefined') ? LRL_USER_ID : 0;
+        return 'lrl_' + path + '_u' + userId + '_';
     })();
 
     var KEYS = {
@@ -142,8 +143,11 @@ var LRL = (function() {
         return fmtDateStr(mon);
     }
 
-    // --- 初期デモデータ投入 ---
+    // --- 初期デモデータ投入（test1ユーザーのみ） ---
     function initDemoData(phpIssues, phpDailyInputs) {
+        var userId = (typeof LRL_USER_ID !== 'undefined') ? LRL_USER_ID : 0;
+        // デモデータはtest1（ID:1）のみに投入
+        if (userId !== 1) return;
         if (localStorage.getItem(KEYS.initialized)) return;
         setJSON(KEYS.issues, phpIssues);
         setJSON(KEYS.dailyInputs, phpDailyInputs);

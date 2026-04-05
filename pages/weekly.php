@@ -261,7 +261,6 @@ function fmtDate(dateStr) {
     return (d.getMonth()+1) + '月' + d.getDate() + '日';
 }
 // esc() はstore.jsでグローバル定義済み
-}
 
 renderWeekly();
 </script>

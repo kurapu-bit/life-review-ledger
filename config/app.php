@@ -29,8 +29,75 @@ define('TEST_USERS', [
     ],
 ]);
 
-// 初回のみ: ハッシュ値を生成するためのヘルパー（本番では削除）
-// echo password_hash('test1', PASSWORD_BCRYPT); exit;
+// === ユーザー管理（JSONファイルベース） ===
+define('USERS_FILE', __DIR__ . '/../data/users.json');
+
+function ensureDataDir(): void {
+    $dir = dirname(USERS_FILE);
+    if (!is_dir($dir)) {
+        mkdir($dir, 0755, true);
+    }
+}
+
+function loadUsers(): array {
+    if (!file_exists(USERS_FILE)) {
+        // 初回: テストユーザーを含むファイルを作成
+        ensureDataDir();
+        $initial = [
+            'test1' => [
+                'id' => 1,
+                'login_id' => 'test1',
+                'name' => 'テストユーザー',
+                'password_hash' => TEST_USERS['test1']['password_hash'],
+                'created_at' => date('Y-m-d H:i:s'),
+            ],
+        ];
+        file_put_contents(USERS_FILE, json_encode($initial, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+        return $initial;
+    }
+    return json_decode(file_get_contents(USERS_FILE), true) ?: [];
+}
+
+function saveUsers(array $users): void {
+    ensureDataDir();
+    file_put_contents(USERS_FILE, json_encode($users, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT), LOCK_EX);
+}
+
+function findUser(string $loginId): ?array {
+    $users = loadUsers();
+    return $users[$loginId] ?? null;
+}
+
+function registerUser(string $loginId, string $password, string $name): array {
+    $users = loadUsers();
+
+    // 次のIDを採番
+    $maxId = 0;
+    foreach ($users as $u) {
+        if (($u['id'] ?? 0) > $maxId) $maxId = $u['id'];
+    }
+
+    $user = [
+        'id' => $maxId + 1,
+        'login_id' => $loginId,
+        'name' => $name,
+        'password_hash' => password_hash($password, PASSWORD_BCRYPT),
+        'created_at' => date('Y-m-d H:i:s'),
+    ];
+
+    $users[$loginId] = $user;
+    saveUsers($users);
+
+    return $user;
+}
+
+function authenticateUser(string $loginId, string $password): ?array {
+    $user = findUser($loginId);
+    if ($user && password_verify($password, $user['password_hash'])) {
+        return $user;
+    }
+    return null;
+}
 
 // ログイン済みか確認
 function isLoggedIn(): bool {

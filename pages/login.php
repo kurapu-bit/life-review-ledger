@@ -34,16 +34,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $error = 'ログインIDまたはパスワードが正しくありません';
             recordLoginAttempt();
         }
-        // パスワードハッシュ検証
-        elseif (isset(TEST_USERS[$loginId]) && password_verify($password, TEST_USERS[$loginId]['password_hash'])) {
-            // セッション固定攻撃対策
-            session_regenerate_id(true);
-            $_SESSION['user_id'] = TEST_USERS[$loginId]['id'];
-            $_SESSION['user_name'] = TEST_USERS[$loginId]['name'];
-            resetLoginAttempts();
-            header('Location: ?page=home');
-            exit;
-        } else {
+        // ユーザー認証
+        else {
+            $user = authenticateUser($loginId, $password);
+            if ($user) {
+                session_regenerate_id(true);
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_name'] = $user['name'];
+                resetLoginAttempts();
+                header('Location: ?page=home');
+                exit;
+            }
+        }
+
+        if (empty($error)) {
             $error = 'ログインIDまたはパスワードが正しくありません';
             recordLoginAttempt();
         }
@@ -94,6 +98,11 @@ $csrfToken = generateCsrfToken();
                     ログイン
                 </button>
             </form>
+
+            <div class="mt-5 text-center">
+                <p class="text-[13px] text-slate-400">アカウントをお持ちでない方</p>
+                <a href="?page=register" class="text-[13px] text-brand-500 hover:text-brand-400 font-medium transition-colors">新規登録はこちら →</a>
+            </div>
         </div>
     </div>
 </body>
